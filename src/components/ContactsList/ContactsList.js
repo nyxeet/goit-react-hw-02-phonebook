@@ -3,8 +3,8 @@ import './ContactsList.css';
 
 const TaskList = ({ tasks }) => (
   <ul className="TaskList">
-    {tasks.map(({ id, text, tel}) => (
-      <li key={id}>{text}: {tel}</li>
+    {tasks.map(({ id, name, number}) => (
+        <li key={id}>{ name }: {number}</li>
     ))}
   </ul>
 );
