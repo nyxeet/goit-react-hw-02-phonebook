@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Layout from './Layout/Layout'
 import ContactsEditor from './ContactsEditor/ContactsEditor'
 import ContactsList from './ContactsList/ContactsList'
+import Filter from './Filter'
 
 
 class App extends React.Component {
@@ -17,35 +18,50 @@ class App extends React.Component {
     }
 
     addContact = (name, number) => {
+        let isValidate = true;
+
         const contact = {
             id: uuidv4(),
             name,
             number,
         }
-        this.setState(prevState => {
+        this.state.contacts.forEach(contact => {
+            if (contact.name === name) {
+                alert(`${name} is already in contacts`)
+                isValidate = false;
+            }
+        });
+
+        (isValidate === true) && this.setState(prevState => {
             return { contacts: [...prevState.contacts, contact] }
-        })
+        }) 
     };
     filterContacts = e => {
         const { contacts, filter } = this.state;
-        return contacts.filter(contact => contact.name.includes(filter))
+        return contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase()))
     }
     changeFilter = filter => {
         this.setState({ filter: filter });
     };
+
+    removeContact = contactId => {
+    this.setState(prevState => {
+      return {
+        contacts: prevState.contacts.filter(({ id }) => id !== contactId),
+      };
+    });
+  };
 
 
     render() {
         const filteredList = this.filterContacts();
         return (
             <Layout>
+                <h1>Phonebook</h1>
                 <ContactsEditor addContact={this.addContact} />
-                <label>
-                    Find contacts by name
-                    <br/>
-                    <input type="text" value={ this.filter } onChange={e => this.changeFilter(e.target.value)}/>        
-                </label>
-                <ContactsList tasks={ filteredList }/>
+                <h2>Contacts</h2>
+                <Filter value={this.filter} changeFilter={ this.changeFilter}/>
+                <ContactsList tasks={filteredList} onRemove={ this.removeContact }/>
             </Layout>
         )
     }
