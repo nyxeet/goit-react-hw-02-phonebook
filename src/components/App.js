@@ -32,7 +32,7 @@ class App extends React.Component {
                 return true;
             }
         })
-        console.log(isValidate)
+
         !isValidate && this.setState(prevState => {
             return { contacts: [...prevState.contacts, contact] }
         }) 
