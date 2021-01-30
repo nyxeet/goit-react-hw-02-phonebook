@@ -5,34 +5,35 @@ import ContactsEditor from './ContactsEditor/ContactsEditor'
 import ContactsList from './ContactsList/ContactsList'
 import Filter from './Filter'
 
+const defaultState = [
+    { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+    {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
+    {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
+    { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+]
 
 class App extends React.Component {
     state = {
-        contacts: [
-            { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-            {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
-            {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
-            { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-        ],
+        contacts: defaultState,
         filter: '',
     }
 
     addContact = (name, number) => {
-        let isValidate = true;
 
         const contact = {
             id: uuidv4(),
             name,
             number,
         }
-        this.state.contacts.forEach(contact => {
+
+        const isValidate = this.state.contacts.some(contact => {
             if (contact.name === name) {
                 alert(`${name} is already in contacts`)
-                isValidate = false;
+                return true;
             }
-        });
-
-        (isValidate === true) && this.setState(prevState => {
+        })
+        console.log(isValidate)
+        !isValidate && this.setState(prevState => {
             return { contacts: [...prevState.contacts, contact] }
         }) 
     };
