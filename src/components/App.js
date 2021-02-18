@@ -1,8 +1,8 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Layout from './Layout/Layout';
-import ContactsEditor from './ContactsEditor/ContactsEditor';
-import ContactsList from './ContactsList/ContactsList';
+import Layout from './Layout';
+import ContactsEditor from './ContactsEditor';
+import ContactsList from './ContactsList';
 import Filter from './Filter';
 
 const defaultState = [
