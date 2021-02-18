@@ -35,7 +35,7 @@ class App extends React.Component {
         })
       : alert(`${name} is already in contacts`);
   };
-  filterContacts = e => {
+  filterContacts = () => {
     const { contacts, filter } = this.state;
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase()),
